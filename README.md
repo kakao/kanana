@@ -7,7 +7,7 @@
         <img alt="Kanana Logo" src="assets/logo/kanana-logo-light.png" width="400" style="margin: 40px auto;">
     </picture>
 </br>
-<p align="center"> 🤗 <a href="https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259">Models</a> &nbsp | &nbsp 📕 <a href="https://tech.kakao.com/posts/689">Blog</a> &nbsp | &nbsp 📜 <a href="./paper/KananaV1_Technical_Report.pdf">Technical Report</a>
+<p align="center"> 🤗 <a href="https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259">Models</a> &nbsp | &nbsp 📕 <a href="https://tech.kakao.com/posts/689">Blog</a> &nbsp | &nbsp 📜 <a href="https://arxiv.org/abs/2502.18934">Technical Report</a>
 
 <br>
 
@@ -41,7 +41,7 @@ We introduce Kanana, a series of bilingual language models (developed by [Kakao]
 
 ## News
 
-- 📜`2025/02/27`: Released [Technical Report](./paper/KananaV1_Technical_Report.pdf) and 🤗[HF model weights](https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259).
+- 📜`2025/02/27`: Released [Technical Report](https://arxiv.org/abs/2502.18934) and 🤗[HF model weights](https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259).
 - 📕`2025/01/10`: Published a blog post about the development of `Kanana-Nano` model. ([Kanana-Nano](https://tech.kakao.com/posts/682))
 - 📕`2024/11/14`: Published blog posts about the development of `Kanana` models. ([Kanana LLM: Pre-training](https://tech.kakao.com/posts/661), [Kanana LLM: Post-training](https://tech.kakao.com/posts/662))
 - ▶️`2024/11/06`: Published a presentation video about the development of the `Kanana` models. ([if(kakaoAI)2024](https://youtu.be/HTBl142x9GI?si=o_we6t9suYK8DfX3))
@@ -862,7 +862,17 @@ The `Kanana` models are licensed under [CC-BY-NC-4.0](./LICENSE).
  
 ## Citation
  
-- (TBD)
+```
+@misc{kananallmteam2025kananacomputeefficientbilinguallanguage,
+      title={Kanana: Compute-efficient Bilingual Language Models}, 
+      author={Kanana LLM Team and Yunju Bak and Hojin Lee and Minho Ryu and Jiyeon Ham and Seungjae Jung and Daniel Wontae Nam and Taegyeong Eo and Donghun Lee and Doohae Jung and Boseop Kim and Nayeon Kim and Jaesun Park and Hyunho Kim and Hyunwoong Ko and Changmin Lee and Kyoung-Woon On and Seulye Baeg and Junrae Cho and Sunghee Jung and Jieun Kang and EungGyun Kim and Eunhwa Kim and Byeongil Ko and Daniel Lee and Minchul Lee and Miok Lee and Shinbok Lee and Gaeun Seo},
+      year={2025},
+      eprint={2502.18934},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2502.18934}, 
+}
+```
 
 <br>
 
