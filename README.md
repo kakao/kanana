@@ -7,7 +7,7 @@
         <img alt="Kanana Logo" src="assets/logo/kanana-logo-light.png" width="400" style="margin: 40px auto;">
     </picture>
 </br>
-<p align="center"> 🤗 <a href="https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259">Models</a> &nbsp | &nbsp 📕 <a href="https://tech.kakao.com/posts/689"> Blog </a> &nbsp | &nbsp 📜 <a> Technical Report </a>
+<p align="center"> 🤗 <a href="https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259">Models</a> &nbsp | &nbsp 📕 <a href="https://tech.kakao.com/posts/689">Blog</a> &nbsp | &nbsp 📜 <a href="./paper/KananaV1_Technical_Report.pdf">Technical Report</a>
 
 <br>
 
@@ -41,7 +41,7 @@ We introduce Kanana, a series of bilingual language models (developed by [Kakao]
 
 ## News
 
-- 📜`2025/02/27`: Released [Technical Report]() and 🤗[HF model weights](https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259).
+- 📜`2025/02/27`: Released [Technical Report](./paper/KananaV1_Technical_Report.pdf) and 🤗[HF model weights](https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259).
 - 📕`2025/01/10`: Published a blog post about the development of `Kanana-Nano` model. ([Kanana-Nano](https://tech.kakao.com/posts/682))
 - 📕`2024/11/14`: Published blog posts about the development of `Kanana` models. ([Kanana LLM: Pre-training](https://tech.kakao.com/posts/661), [Kanana LLM: Post-training](https://tech.kakao.com/posts/662))
 - ▶️`2024/11/06`: Published a presentation video about the development of the `Kanana` models. ([if(kakaoAI)2024](https://youtu.be/HTBl142x9GI?si=o_we6t9suYK8DfX3))
@@ -51,7 +51,7 @@ We introduce Kanana, a series of bilingual language models (developed by [Kakao]
 
 ## Performance
 
-Below are partial report on the performance of the `Kanana` model series. Please refer to the [Technical Report]() for the full results.
+Below are partial report on the performance of the `Kanana` model series. Please refer to the [Technical Report](./paper/KananaV1_Technical_Report.pdf) for the full results.
 
 ### Pre-trained Model Performance
 
@@ -862,14 +862,7 @@ The `Kanana` models are licensed under [CC-BY-NC-4.0](./LICENSE).
  
 ## Citation
  
-```
-@article{kanana,
-  title={Kanana: Compute-efficient Bilingual Language Models},
-  author={Kanana LLM Team},
-  journal={TBD},
-  year={2025}
-}
-```
+- (TBD)
 
 <br>
 
