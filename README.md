@@ -1,4 +1,3 @@
-# Kanana
 <p align="center">
 <br>
     <picture>
@@ -7,17 +6,516 @@
         <img alt="Kanana Logo" src="assets/logo/kanana-logo-light.png" width="400" style="margin: 40px auto;">
     </picture>
 </br>
-<p align="center"> 🤗 <a href="https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259">Models</a> &nbsp | &nbsp 📕 <a href="https://tech.kakao.com/posts/689">Blog</a> &nbsp | &nbsp 📜 <a href="https://arxiv.org/abs/2502.18934">Technical Report</a>
+<p align="center">
+🤗 <a href="https://kko.kakao.com/kananallm">1.5 HF Models</a> &nbsp |
+&nbsp 📕 <a href="https://tech.kakao.com/posts/707">1.5 Blog</a> &nbsp |
+&nbsp 📜 <a href="https://arxiv.org/abs/2502.18934">Technical Report</a>
+
 
 <br>
 
+## News 🔥
+
+- ✨`2025/05/23`: Published a [blog post](https://tech.kakao.com/posts/707) about `Kanana 1.5` models and released 🤗[HF model weights](https://kko.kakao.com/kananallm).
+- 📜`2025/02/27`: Released [Technical Report](https://arxiv.org/abs/2502.18934) and 🤗[HF model weights](https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259).
+- 📕`2025/01/10`: Published a [blog post](https://tech.kakao.com/posts/682) about the development of `Kanana Nano` model.
+- 📕`2024/11/14`: Published blog posts ([pre-training](https://tech.kakao.com/posts/661), [post-training](https://tech.kakao.com/posts/662)) about the development of `Kanana` models.
+- ▶️`2024/11/06`: Published a [presentation video](https://youtu.be/HTBl142x9GI?si=o_we6t9suYK8DfX3) about the development of the `Kanana` models.
+
 <br>
 
-## Introduction
+## Table of Contents
+
+- [Kanana 1.5](#kanana-15)
+    - [Performance](#performance)
+        - [Base Model Evaluation](#base-model-evaluation)
+        - [Instruct Model Evaluation](#instruct-model-evaluation)
+        - [Long Context](#long-context)
+    - [Processing 32K+ Length](#processing-32k-length)
+    - [Contributors](#contributors)
+- [Kanana 1.0](#kanana-10)
+- [Citation](#citation)
+- [Contact](#contact)
+
+<br>
+
+# Kanana 1.5
+
+`Kanana 1.5`, a newly introduced version of the Kanana model family, presents substantial enhancements in **coding, mathematics, and function calling capabilities** over the previous version, enabling broader application to more complex real-world problems. This new version now can handle __up to 32K tokens length natively and up to 128K tokens using YaRN__, allowing the model to maintain coherence when handling extensive documents or engaging in extended conversations. Furthermore, Kanana 1.5 delivers more natural and accurate conversations through a __refined post-training process__.
+
+<!-- <p align="center">
+<picture>
+    <img src="assets/performance/kanana-1.5-radar.png", width="700" style="margin: 40px auto;">
+</picture> -->
+
+> [!Note]
+> Neither the pre-training nor the post-training data includes Kakao user data.
+
+## Performance
+
+### Base Model Evaluation
+<table>
+    <tr>
+        <th>Models</th>
+        <th>MMLU</th>
+        <th>KMMLU</th>
+        <th>HAERAE</th>
+        <th>HumanEval</th>
+        <th>MBPP</th>
+        <th>GSM8K</th>
+    </tr>
+    <tr>
+        <td><strong>Kanana-Flag-1.5-32.5B</strong></td>
+        <td align="center">76.76</td>
+        <td align="center">61.90</td>
+        <td align="center">89.18</td>
+        <td align="center">73.17</td>
+        <td align="center">65.60</td>
+        <td align="center">81.50</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-Flag-32.5B</strong></td>
+        <td align="center">77.68</td>
+        <td align="center">62.10</td>
+        <td align="center">90.47</td>
+        <td align="center">51.22</td>
+        <td align="center">63.40</td>
+        <td align="center">70.05</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-Essence-1.5-9.8B</strong></td>
+        <td align="center">68.27</td>
+        <td align="center">52.78</td>
+        <td align="center">86.34</td>
+        <td align="center">64.63</td>
+        <td align="center">61.60</td>
+        <td align="center">71.57</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-Essence-9.8B</strong></td>
+        <td align="center">67.61</td>
+        <td align="center">50.57</td>
+        <td align="center">84.97</td>
+        <td align="center">40.24</td>
+        <td align="center">53.60</td>
+        <td align="center">63.61</td>
+    </tr>
+    <!-- <tr>
+        <td><strong>Kanana-1.5-8B</strong></td>
+        <td align="center">64.24</td>
+        <td align="center">48.94</td>
+        <td align="center">82.77</td>
+        <td align="center">61.59</td>
+        <td align="center">57.80</td>
+        <td align="center">63.53</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-8B</strong></td>
+        <td align="center">64.22</td>
+        <td align="center">48.30</td>
+        <td align="center">83.41</td>
+        <td align="center">40.24</td>
+        <td align="center">51.40</td>
+        <td align="center">57.09</td>
+    </tr> -->
+    <tr>
+        <td><strong>Kanana-Nano-1.5-3B</strong></td>
+        <td align="center">59.23</td>
+        <td align="center">47.30</td>
+        <td align="center">78.00</td>
+        <td align="center">46.34</td>
+        <td align="center">46.80</td>
+        <td align="center">61.79</td>
+    </tr>
+    <!-- <tr>
+        <td><strong>Kanana-1.5-2.1B</strong></td>
+        <td align="center">56.30</td>
+        <td align="center">45.10</td>
+        <td align="center">77.46</td>
+        <td align="center">52.44</td>
+        <td align="center">47.00</td>
+        <td align="center">55.95</td>
+    </tr> -->
+    <tr>
+        <td><strong>Kanana-Nano-2.1B</strong></td>
+        <td align="center">54.83</td>
+        <td align="center">44.80</td>
+        <td align="center">77.09</td>
+        <td align="center">31.10</td>
+        <td align="center">46.20</td>
+        <td align="center">46.32</td>
+    </tr>
+</table>
+
+#### Open-source Base Model Evaluation
+<table>
+    <tr>
+        <th>Models</th>
+        <th>MMLU</th>
+        <th>KMMLU</th>
+        <th>HAERAE</th>
+        <th>HumanEval</th>
+        <th>MBPP</th>
+        <th>GSM8K</th>
+    </tr>
+    <tr>
+        <td><strong>Kanana-1.5-8B</strong></td>
+        <td align="center">64.24</td>
+        <td align="center">48.94</td>
+        <td align="center">82.77</td>
+        <td align="center">61.59</td>
+        <td align="center">57.80</td>
+        <td align="center">63.53</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-8B*</strong></td>
+        <td align="center">64.22</td>
+        <td align="center">48.30</td>
+        <td align="center">83.41</td>
+        <td align="center">40.24</td>
+        <td align="center">51.40</td>
+        <td align="center">57.09</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-1.5-2.1B</strong></td>
+        <td align="center">56.30</td>
+        <td align="center">45.10</td>
+        <td align="center">77.46</td>
+        <td align="center">52.44</td>
+        <td align="center">47.00</td>
+        <td align="center">55.95</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-Nano-2.1B</strong></td>
+        <td align="center">54.83</td>
+        <td align="center">44.80</td>
+        <td align="center">77.09</td>
+        <td align="center">31.10</td>
+        <td align="center">46.20</td>
+        <td align="center">46.32</td>
+    </tr>
+</table>
+
+> \* This model is not an open-sourced, just for comparison with Kanana-1.5-8B
+
+<br>
+
+### Instruct Model Evaluation
+<table>
+    <tr>
+        <th>Models</th>
+        <th>MT-Bench</th>
+        <th>KoMT-Bench</th>
+        <th>IFEval</th>
+        <th>HumanEval+</th>
+        <th>MBPP+</th>
+        <th>GSM8K (0-shot)</th>
+        <th>MATH</th>
+        <th>MMLU (0-shot, CoT)</th>
+        <th>KMMLU (0-shot, CoT)</th>
+        <th>FunctionChatBench</th>
+    </tr>
+    <tr>
+        <td><strong>Kanana-Flag-1.5-32.5B</strong></td>
+        <td align="center">8.13</td>
+        <td align="center">8.12</td>
+        <td align="center">82.70</td>
+        <td align="center">79.88</td>
+        <td align="center">71.96</td>
+        <td align="center">93.03</td>
+        <td align="center">75.96</td>
+        <td align="center">82.76</td>
+        <td align="center">64.10</td>
+        <td align="center">67.17</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-Flag-32.5B</strong></td>
+        <td align="center">8.33</td>
+        <td align="center">8.03</td>
+        <td align="center">84.59</td>
+        <td align="center">78.66</td>
+        <td align="center">69.84</td>
+        <td align="center">91.66</td>
+        <td align="center">58.08</td>
+        <td align="center">81.08</td>
+        <td align="center">64.19</td>
+        <td align="center">65.67</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-Essence-1.5-9.8B</strong></td>
+        <td align="center">7.88</td>
+        <td align="center">7.35</td>
+        <td align="center">76.34</td>
+        <td align="center">72.56</td>
+        <td align="center">66.93</td>
+        <td align="center">90.07</td>
+        <td align="center">62.02</td>
+        <td align="center">72.85</td>
+        <td align="center">52.00</td>
+        <td align="center">51.43</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-Essence-9.8B</strong></td>
+        <td align="center">7.81</td>
+        <td align="center">7.65</td>
+        <td align="center">80.20</td>
+        <td align="center">72.56</td>
+        <td align="center">68.52</td>
+        <td align="center">84.91</td>
+        <td align="center">42.24</td>
+        <td align="center">70.64</td>
+        <td align="center">50.76</td>
+        <td align="center">26.77</td>
+    </tr>
+    <!-- <tr>
+        <td><strong>Kanana-1.5-8B*</strong></td>
+        <td align="center">7.76</td>
+        <td align="center">7.63</td>
+        <td align="center">80.11</td>
+        <td align="center">76.83</td>
+        <td align="center">67.99</td>
+        <td align="center">87.64</td>
+        <td align="center">67.54</td>
+        <td align="center">68.82</td>
+        <td align="center">48.28</td>
+        <td align="center">58.00</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-8B</strong></td>
+        <td align="center">7.13</td>
+        <td align="center">6.92</td>
+        <td align="center">76.91</td>
+        <td align="center">62.20</td>
+        <td align="center">43.92</td>
+        <td align="center">79.23</td>
+        <td align="center">37.68</td>
+        <td align="center">66.50</td>
+        <td align="center">47.43</td>
+        <td align="center">17.37</td>
+    </tr> -->
+    <tr>
+        <td><strong>Kanana-Nano-1.5-3B</strong></td>
+        <td align="center">7.01</td>
+        <td align="center">6.52</td>
+        <td align="center">70.08</td>
+        <td align="center">70.73</td>
+        <td align="center">64.29</td>
+        <td align="center">80.36</td>
+        <td align="center">56.70</td>
+        <td align="center">59.69</td>
+        <td align="center">37.60</td>
+        <td align="center">55.37</td>
+    </tr>
+    <!-- <tr>
+        <td><strong>Kanana-1.5-2.1B*</strong></td>
+        <td align="center">7.01</td>
+        <td align="center">6.54</td>
+        <td align="center">68.61</td>
+        <td align="center">68.90</td>
+        <td align="center">65.08</td>
+        <td align="center">81.43</td>
+        <td align="center">60.62</td>
+        <td align="center">53.87</td>
+        <td align="center">32.93</td>
+        <td align="center">53.70</td>
+    </tr> -->
+    <tr>
+        <td><strong>Kanana-Nano-2.1B</strong></td>
+        <td align="center">6.40</td>
+        <td align="center">5.90</td>
+        <td align="center">71.97</td>
+        <td align="center">63.41</td>
+        <td align="center">62.43</td>
+        <td align="center">72.32</td>
+        <td align="center">29.26</td>
+        <td align="center">52.48</td>
+        <td align="center">38.51</td>
+        <td align="center">26.10</td>
+    </tr>
+</table>
+
+#### Open-source Instruct Model Evaluation
+<table>
+    <tr>
+        <th>Models</th>
+        <th>MT-Bench</th>
+        <th>KoMT-Bench</th>
+        <th>IFEval</th>
+        <th>HumanEval+</th>
+        <th>MBPP+</th>
+        <th>GSM8K (0-shot)</th>
+        <th>MATH</th>
+        <th>MMLU (0-shot, CoT)</th>
+        <th>KMMLU (0-shot, CoT)</th>
+        <th>FunctionChatBench</th>
+    </tr>
+    <tr>
+        <td><strong>Kanana-1.5-8B†</strong></td>
+        <td align="center">7.76</td>
+        <td align="center">7.63</td>
+        <td align="center">80.11</td>
+        <td align="center">76.83</td>
+        <td align="center">67.99</td>
+        <td align="center">87.64</td>
+        <td align="center">67.54</td>
+        <td align="center">68.82</td>
+        <td align="center">48.28</td>
+        <td align="center">58.00</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-8B*</strong></td>
+        <td align="center">7.13</td>
+        <td align="center">6.92</td>
+        <td align="center">76.91</td>
+        <td align="center">62.20</td>
+        <td align="center">43.92</td>
+        <td align="center">79.23</td>
+        <td align="center">37.68</td>
+        <td align="center">66.50</td>
+        <td align="center">47.43</td>
+        <td align="center">17.37</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-1.5-2.1B†</strong></td>
+        <td align="center">7.01</td>
+        <td align="center">6.54</td>
+        <td align="center">68.61</td>
+        <td align="center">68.90</td>
+        <td align="center">65.08</td>
+        <td align="center">81.43</td>
+        <td align="center">60.62</td>
+        <td align="center">53.87</td>
+        <td align="center">32.93</td>
+        <td align="center">53.70</td>
+    </tr>
+    <tr>
+        <td><strong>Kanana-Nano-2.1B</strong></td>
+        <td align="center">6.40</td>
+        <td align="center">5.90</td>
+        <td align="center">71.97</td>
+        <td align="center">63.41</td>
+        <td align="center">62.43</td>
+        <td align="center">72.32</td>
+        <td align="center">29.26</td>
+        <td align="center">52.48</td>
+        <td align="center">38.51</td>
+        <td align="center">26.10</td>
+    </tr>
+</table>
+
+> † Models released under Apache 2.0 are trained on the latest versions compared to other models.
+
+> \* This model is not an open-sourced, just for comparison with Kanana-1.5-8B
+
+<br>
+
+### Long Context
+The current approach we use for extending context length has limitations when applied to models with fewer parameters(~3B). We are therefore refining this approach and intend to implement it across all models going forward soon.
+
+<details>
+<summary>Kanana-Flag-1.5-32.5B</summary>
+
+#### Kanana-Flag-1.5-32.5B-Base
+Below is a Needle-in-a-Haystack performance of `Kanana-Flag-1.5-32.5B-Base` model which was trained on a target context length of 32K.
+- (top): evaluated with native 32K context length
+- (bottom): extended to 128K context length using YaRN
+
+<p align="center">
+<picture>
+    <img src="assets/performance/kanana-flag-1.5-32.5b-base-niah-retform-32k.png", width="1000" style="margin: 10px auto;">
+</picture>
+
+<p align="center">
+<picture>
+    <img src="assets/performance/kanana-flag-1.5-32.5b-base-niah-retform-128k.png", width="1000" style="margin: 10px auto;">
+</picture>
+
+#### Kanana-Flag-1.5-32.5B-Instruct
+Below is a Needle-in-a-Haystack performance of `Kanana-Flag-1.5-32.5B-Instruct` model which was trained on a target context length of 32K.
+- (top): evaluated with native 32K context length
+- (bottom): extended to 128K context length using YaRN
+
+<p align="center">
+<picture>
+    <img src="assets/performance/kanana-flag-1.5-32.5b-instruct-niah-qaform-32k.png", width="1000" style="margin: 10px auto;">
+</picture>
+
+<p align="center">
+<picture>
+    <img src="assets/performance/kanana-flag-1.5-32.5b-instruct-niah-qaform-128k.png", width="1000" style="margin: 10px auto;">
+</picture>
+
+</details>
+
+<details>
+<summary>Kanana-Essence-1.5-9.8B</summary>
+
+#### Kanana-Essence-1.5-9.8B-Base
+Below is a Needle-in-a-Haystack performance of `Kanana-Essence-1.5-9.8B-Base` model which was trained on a target context length of 32K.
+- (top): evaluated with native 32K context length
+- (bottom): extended to 128K context length using YaRN
+
+<p align="center">
+<picture>
+    <img src="assets/performance/kanana-essence-1.5-9.8b-base-niah-retform-32k.png", width="1000" style="margin: 10px auto;">
+</picture>
+
+<p align="center">
+<picture>
+    <img src="assets/performance/kanana-essence-1.5-9.8b-base-niah-retform-128k.png", width="1000" style="margin: 10px auto;">
+</picture>
+
+#### Kanana-Essence-1.5-9.8B-Instruct
+Below is a Needle-in-a-Haystack performance of `Kanana-Essence-1.5-9.8B-Instruct` model which was trained on a target context length of 32K.
+- (top): evaluated with native 32K context length
+- (bottom): extended to 128K context length using YaRN
+
+<p align="center">
+<picture>
+    <img src="assets/performance/kanana-essence-1.5-9.8b-instruct-niah-qaform-32k.png", width="1000" style="margin: 10px auto;">
+</picture>
+
+<p align="center">
+<picture>
+    <img src="assets/performance/kanana-essence-1.5-9.8b-instruct-niah-qaform-128k.png", width="1000" style="margin: 10px auto;">
+</picture>
+
+</details>
+
+> [!Note]
+> Other models to be updated soon
+
+<br>
+
+## Processing 32K+ Length
+Currently, the `config.json` uploaded to HuggingFace is configured for token lengths of 32,768 or less. To process tokens beyond this length, YaRN must be applied. By updating the `config.json` with the following parameters, you can apply YaRN to handle token sequences up to 128K in length:
+```json
+"rope_scaling": {
+    "factor": 4.4,
+    "original_max_position_embeddings": 32768,
+    "type": "yarn",
+    "beta_fast": 64,
+    "beta_slow": 2
+},
+```
+
+<br>
+
+## Contributors
+- Language Model Training: Yunju Bak, Doohae Jung, Boseop Kim, Nayeon Kim, Hojin Lee, Jaesun Park, Minho Ryu
+- Language Model Alignment: Jiyeon Ham, Seungjae Jung, Hyunho Kim, Hyunwoong Ko, Changmin Lee, Daniel Wontae Nam
+- AI Engineering: Youmin Kim, Hyeongju Kim
+
+<br>
+
+# Kanana 1.0
+<details>
+<summary>View the details about Kanana 1.0</summary>
+
+<br>
 
 We introduce Kanana, a series of bilingual language models (developed by [Kakao](https://github.com/kakao)) that demonstrate exceeding performance in Korean and competitive performance in English. The computational cost of Kanana is significantly lower than that of state-of-the-art models of similar size. The report details the techniques employed during pre-training to achieve compute-efficient yet competitive models, including high-quality data filtering, staged pre-training, depth up-scaling, and pruning and distillation. Furthermore, the report outlines the methodologies utilized during the post-training of the Kanana models, encompassing supervised fine-tuning and preference optimization, aimed at enhancing their capability for seamless interaction with users. Lastly, the report elaborates on plausible approaches used for language model adaptation to specific scenarios, such as embedding, function calling, and Retrieval Augmented Generation (RAG). The Kanana model series spans from 2.1B to 32.5B parameters with 2.1B models (base, instruct, embedding, function call, and RAG) publicly released to promote research on Korean language models.
 
-> [!Note]
 > Neither the pre-training nor the post-training data includes Kakao user data.
 
 <p align="center">
@@ -25,35 +523,11 @@ We introduce Kanana, a series of bilingual language models (developed by [Kakao]
     <img src="assets/performance/flops-vs-mmlu.jpg", width="700" style="margin: 40px auto;">
 </picture>
 
-<br>
-
-## Table of Contents
-
-- [News](#news)
-- [Performance](#performance)
-- [Quickstart](#quickstart)
-- [License](#license)
-- [Citation](#citation)
-- [Contributors](#contributors)
-- [Contact](#contact)
-
-<br>
-
-## News
-
-- 📜`2025/02/27`: Released [Technical Report](https://arxiv.org/abs/2502.18934) and 🤗[HF model weights](https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259).
-- 📕`2025/01/10`: Published a blog post about the development of `Kanana-Nano` model. ([Kanana-Nano](https://tech.kakao.com/posts/682))
-- 📕`2024/11/14`: Published blog posts about the development of `Kanana` models. ([Kanana LLM: Pre-training](https://tech.kakao.com/posts/661), [Kanana LLM: Post-training](https://tech.kakao.com/posts/662))
-- ▶️`2024/11/06`: Published a presentation video about the development of the `Kanana` models. ([if(kakaoAI)2024](https://youtu.be/HTBl142x9GI?si=o_we6t9suYK8DfX3))
-
-
-<br>
-
 ## Performance
 
-Below are partial report on the performance of the `Kanana` model series. Please refer to the [Technical Report](./paper/KananaV1_Technical_Report.pdf) for the full results.
+Below are partial report on the performance of the `Kanana` model series. Please refer to the [Technical Report](https://arxiv.org/abs/2502.18934) for the full results.
 
-### Pre-trained Model Performance
+### Base Model Evaluation
 
 <table>
     <tr>
@@ -244,7 +718,7 @@ Below are partial report on the performance of the `Kanana` model series. Please
 <br>
 
 
-### Post-trained Model Performance
+### Instruct Model Evaluation
 
 #### Instruction-following Benchmarks
 <table>
@@ -663,201 +1137,14 @@ Below are partial report on the performance of the `Kanana` model series. Please
 
 <br>
 
-## Quickstart
+## Contributors
 
-### 🤗 HuggingFace Transformers
+- Pre-training: Yunju Bak, Doohae Jung, Boseop Kim, Nayeon Kim, Hojin Lee, Jaesun Park, Minho Ryu
+- Post-training: Jiyeon Ham, Seungjae Jung, Hyunho Kim, Hyunwoong Ko, Changmin Lee, Daniel Wontae Nam, Kyoung-Woon On
+- Adaptation: Seulye Baeg, Junrae Cho, Taegyeong Eo, Sunghee Jung, Jieun Kang, EungGyun Kim, Eunhwa Kim, Byeongil Ko, Daniel Lee, Donghun Lee, Minchul Lee, Miok Lee, Shinbok Lee, Minho Ryu, Gaeun Seo
 
-- `transformers>=4.45.0` or the latest version is required to run `Kanana` model.
-```bash
-pip install transformers>=4.45.0
-```
+</details>
 
-#### Example Usage for `kanana-nano-2.1b-base`
-```python
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-model_name = "kakaocorp/kanana-nano-2.1b-base"
-
-model = AutoModelForCausalLM.from_pretrained(
-    model_name,
-    torch_dtype=torch.bfloat16,
-    trust_remote_code=True,
-).to("cuda")
-tokenizer = AutoTokenizer.from_pretrained(model_name, padding_side="left")
-tokenizer.pad_token = tokenizer.eos_token
-
-prompt1 = "이처럼 인간처럼 생각하고 행동하는 AI 모델은 "
-prompt2 = "Kakao is a leading company in South Korea, and it is known for "
-
-input_ids = tokenizer(
-    [prompt1, prompt2],
-    padding=True,
-    return_tensors="pt",
-)["input_ids"].to("cuda")
-
-_ = model.eval()
-with torch.no_grad():
-    output = model.generate(
-        input_ids,
-        max_new_tokens=32,
-        do_sample=False,
-    )
-
-decoded = tokenizer.batch_decode(output, skip_special_tokens=True)
-for text in decoded:
-    print(text)
-
-# Output:
-# 이처럼 인간처럼 생각하고 행동하는 AI 모델은 2020년대 중반에 등장할 것으로 예상된다. 2020년대 중반에 등장할 것으로 예상되는 AI 모델은 인간
-# Kakao is a leading company in South Korea, and it is known for 1) its innovative products and services, 2) its commitment to sustainability, and 3) its focus on customer experience. Kakao has been recognized as
-```
-
-#### Example Usage for `kanana-nano-2.1b-instruct`
-```python
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-model_name = "kakaocorp/kanana-nano-2.1b-instruct"
-
-model = AutoModelForCausalLM.from_pretrained(
-    model_name,
-    torch_dtype=torch.bfloat16,
-    trust_remote_code=True,
-).to("cuda")
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-prompt = "Convert these dates to YYYY/MM/DD format:\n12/31/2021\n02-01-22"
-messages = [
-    {"role": "system", "content": "You are a helpful AI assistant developed by Kakao."},
-    {"role": "user", "content": prompt}
-]
-
-input_ids = tokenizer.apply_chat_template(
-    messages,
-    tokenize=True,
-    add_generation_prompt=True,
-    return_tensors="pt"
-).to("cuda")
-
-_ = model.eval()
-with torch.no_grad():
-    output = model.generate(
-        input_ids,
-        max_new_tokens=72,
-        do_sample=False,
-    )
-
-print(tokenizer.decode(output[0], skip_special_tokens=True))
-
-# Output:
-# Sure! Here are the given dates converted to the `YYYY/MM/DD` format:
-
-# 1. **12/31/2021**
-#    - **YYYY/MM/DD:** 2021/12/31
-
-# 2. **02-01-22**
-#    - **YYYY/MM/DD:** 2022/02/01
-
-# So, the converted dates are ...
-```
-
-#### Example Usage for `kanana-nano-2.1b-embedding`
-
-> [!Note]
-> You need to install `datasets` via `pip install datasets` before using `kanana-nano-2.1b-embedding` model.
-
-```python
-import torch.nn.functional as F
-from transformers import AutoModel
-
-instruction = "Given a question, retrieve passages that answer the question"
-queries = [
-    "are judo throws allowed in wrestling?", 
-    "how to become a radiology technician in michigan?",
-]
-
-passages = [
-    "Since you're reading this, you are probably someone from a judo background or someone who is just wondering how judo techniques can be applied under wrestling rules. So without further ado, let's get to the question. Are Judo throws allowed in wrestling? Yes, judo throws are allowed in freestyle and folkstyle wrestling. You only need to be careful to follow the slam rules when executing judo throws. In wrestling, a slam is lifting and returning an opponent to the mat with unnecessary force.",
-    "Below are the basic steps to becoming a radiologic technologist in Michigan:Earn a high school diploma. As with most careers in health care, a high school education is the first step to finding entry-level employment. Taking classes in math and science, such as anatomy, biology, chemistry, physiology, and physics, can help prepare students for their college studies and future careers.Earn an associate degree. Entry-level radiologic positions typically require at least an Associate of Applied Science. Before enrolling in one of these degree programs, students should make sure it has been properly accredited by the Joint Review Committee on Education in Radiologic Technology (JRCERT).Get licensed or certified in the state of Michigan.",
-]
-
-model = AutoModel.from_pretrained(
-    "kakaocorp/kanana-nano-2.1b-embedding",
-    trust_remote_code=True,
-).to("cuda")
-
-max_length = 512
-query_embeddings = model.encode(queries, instruction=instruction, max_length=max_length)
-passage_embeddings = model.encode(passages, instruction="", max_length=max_length)
-
-# get the embeddings with DataLoader (spliting the datasets into multiple mini-batches)
-# batch_size = 2
-# query_embeddings = model._do_encode(queries, batch_size=batch_size, instruction=instruction, max_length=max_length)
-# passage_embeddings = model._do_encode(passages, batch_size=batch_size, instruction="", max_length=max_length)
-
-query_embeddings = F.normalize(query_embeddings, p=2, dim=1)
-passage_embeddings = F.normalize(passage_embeddings, p=2, dim=1)
-
-
-scores = (query_embeddings @ passage_embeddings.T) * 100
-print(scores.tolist())
-
-# Output:
-# [[84.36527252197266, 31.752296447753906], [35.940425872802734, 81.82719421386719]]
-```
-
-<br>
-
-### vLLM
-#### Example Usage for `kanana-nano-2.1b-base`
-```bash
-vllm serve kakaocorp/kanana-nano-2.1b-base
-
-curl http://localhost:8000/v1/completions -H "Content-Type: application/json" -d '{
-    "model": "kakaocorp/kanana-nano-2.1b-base",
-    "prompt": "Kakao is a leading company in South Korea, and it is known for ",
-    "max_tokens": 32,
-    "top_k": 1
-}'
-
-# Output:
-'''
-...
-"choices":[{"index":0,"text":"1) its innovative products and services, 2) its commitment to sustainability, and 3) its focus on customer experience. Kakao has been recognized as", ...
-...
-'''
-```
-
-#### Example Usage for `kanana-nano-2.1b-instruct`
-```bash
-vllm serve kakaocorp/kanana-nano-2.1b-instruct
-
-curl http://localhost:8000/v1/chat/completions -H "Content-Type: application/json" -d '{
-  "model": "kakaocorp/kanana-nano-2.1b-instruct",
-  "messages": [
-    {"role": "system", "content": "You are a helpful AI assistant developed by Kakao."},
-    {"role": "user", "content": "Convert these dates to YYYY/MM/DD format:\n12/31/2021\n02-01-22"}
-  ],
-  "top_k": 1,
-  "max_tokens": 72
-}'
-
-# Output:
-'''
-...
-"choices":[{"index":0,"message":{"role":"assistant","content":"Sure! Here are the given dates converted to the `YYYY/MM/DD` format:\n\n1. **12/31/2021**\n   - **YYYY/MM/DD:** 2021/12/31\n\n2. **02-01-22**\n   - **YYYY/MM/DD:** 2022/02/01\n\nSo, the converted dates are", ...
-...
-'''
-```
-
-
-<br>
-
-## License
-
-The `Kanana` models are licensed under [CC-BY-NC-4.0](./LICENSE).
- 
 <br>
  
 ## Citation
@@ -873,13 +1160,6 @@ The `Kanana` models are licensed under [CC-BY-NC-4.0](./LICENSE).
       url={https://arxiv.org/abs/2502.18934}, 
 }
 ```
-
-<br>
-
-## Contributors
-- Pre-training: Yunju Bak, Doohae Jung, Boseop Kim, Nayeon Kim, Hojin Lee, Jaesun Park,  Minho Ryu
-- Post-training: Jiyeon Ham, Seungjae Jung, Hyunho Kim, Hyunwoong Ko, Changmin Lee, Daniel Wontae Nam, Kyoung-Woon On
-- Adaptation: Seulye Baeg, Junrae Cho, Taegyeong Eo, Sunghee Jung, Jieun Kang, EungGyun Kim, Eunhwa Kim, Byeongil Ko, Daniel Lee, Donghun Lee, Minchul Lee, Miok Lee, Shinbok Lee, Minho Ryu, Gaeun Seo
 
 <br>
 
