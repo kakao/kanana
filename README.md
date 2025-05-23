@@ -410,7 +410,7 @@
 <br>
 
 ### Long Context
-The current approach we use for extending context length has limitations when applied to models with fewer parameters(~3B). We are therefore refining this approach and intend to implement it across all models going forward soon.
+The current approach we use for extending context length to 128k has limitations when applied to models with fewer parameters(~3B models only support 32k). We are therefore refining this approach and intend to implement it across all models going forward soon.
 
 <details>
 <summary>Kanana-Flag-1.5-32.5B</summary>
