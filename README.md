@@ -7,16 +7,15 @@
     </picture>
 </br>
 <p align="center">
-🤗 <a href="https://kko.kakao.com/kananallm">1.5 HF Models</a> &nbsp |
-&nbsp 📕 <a href="https://tech.kakao.com/posts/707">1.5 Blog</a> &nbsp |
-&nbsp 📜 <a href="https://arxiv.org/abs/2502.18934">Technical Report</a>
-
+🤗 <a href="https://kko.kakao.com/kananallm">Kanana-1.5 HF Models</a> &nbsp |
+&nbsp 📕 <a href="https://tech.kakao.com/search?q=kanana">Blogs</a> &nbsp
 
 <br>
 
 ## News 🔥
 
-- ✨`2025/05/23`: Published a [blog post](https://tech.kakao.com/posts/707) about `Kanana 1.5` models and released 🤗[HF model weights](https://kko.kakao.com/kananallm).
+- ✨`2025/07/24`: Published a [blog post](https://tech.kakao.com/posts/716) about `Kanana-1.5-15.7B-A3B` models and released 🤗[HF model weights](https://kko.kakao.com/kananallm).
+- 📕`2025/05/23`: Published a [blog post](https://tech.kakao.com/posts/707) about `Kanana 1.5` models and released 🤗[HF model weights](https://kko.kakao.com/kananallm).
 - 📜`2025/02/27`: Released [Technical Report](https://arxiv.org/abs/2502.18934) and 🤗[HF model weights](https://huggingface.co/collections/kakaocorp/kanana-nano-21b-67a326cda1c449c8d4172259).
 - 📕`2025/01/10`: Published a [blog post](https://tech.kakao.com/posts/682) about the development of `Kanana Nano` model.
 - 📕`2024/11/14`: Published blog posts ([pre-training](https://tech.kakao.com/posts/661), [post-training](https://tech.kakao.com/posts/662)) about the development of `Kanana` models.
@@ -43,6 +42,10 @@
 
 `Kanana 1.5`, a newly introduced version of the Kanana model family, presents substantial enhancements in **coding, mathematics, and function calling capabilities** over the previous version, enabling broader application to more complex real-world problems. This new version now can handle __up to 32K tokens length natively and up to 128K tokens using YaRN__, allowing the model to maintain coherence when handling extensive documents or engaging in extended conversations. Furthermore, Kanana 1.5 delivers more natural and accurate conversations through a __refined post-training process__.
 
+#### ✨ Updated Kanana-1.5-15.7B-A3B
+
+Introducing `Kanana-1.5-15.7B-A3B`, the first Mixture-of-Experts (MoE) model in our Kanana family, engineered for exceptional efficiency and powerful performance. `Kanana-1.5-15.7B-A3B`, which has sparse architecture, delivers capabilities comparable to the `Kanana-1.5-8B` dense model while utilizing only 37% of the FLOPS per token, making it a highly inference-efficient and cost-effective solution for real-world applications. Furthermore, `Kanana-1.5-15.7B-A3B` is powered by our newly enhanced post-training strategy, which includes on-policy distillation followed by reinforcement learning.
+
 <!-- <p align="center">
 <picture>
     <img src="assets/performance/kanana-1.5-radar.png", width="700" style="margin: 40px auto;">
@@ -59,7 +62,7 @@
         <th>Models</th>
         <th>MMLU</th>
         <th>KMMLU</th>
-        <th>HAERAE</th>
+        <th>HAE-RAE</th>
         <th>HumanEval</th>
         <th>MBPP</th>
         <th>GSM8K</th>
@@ -153,10 +156,19 @@
         <th>Models</th>
         <th>MMLU</th>
         <th>KMMLU</th>
-        <th>HAERAE</th>
+        <th>HAE-RAE</th>
         <th>HumanEval</th>
         <th>MBPP</th>
         <th>GSM8K</th>
+    </tr>
+    <tr>
+        <td><strong>Kanana-1.5-15.7B-A3B (<em>New!</em>)</strong></td>
+        <td align="center">64.79</td>
+        <td align="center">51.77</td>
+        <td align="center">83.23</td>
+        <td align="center">59.76</td>
+        <td align="center">60.10</td>
+        <td align="center">61.18</td>
     </tr>
     <tr>
         <td><strong>Kanana-1.5-8B</strong></td>
@@ -350,6 +362,19 @@
         <th>FunctionChatBench</th>
     </tr>
     <tr>
+        <td><strong>Kanana-1.5-15.7B-A3B (<em>New!</em>)</strong></td>
+        <td align="center">7.67</td>
+        <td align="center">7.24</td>
+        <td align="center">73.35</td>
+        <td align="center">79.27</td>
+        <td align="center">70.37</td>
+        <td align="center">83.02</td>
+        <td align="center">66.42</td>
+        <td align="center">68.55</td>
+        <td align="center">48.92</td>
+        <td align="center">TBA</td>
+    </tr>
+    <tr>
         <td><strong>Kanana-1.5-8B†</strong></td>
         <td align="center">7.76</td>
         <td align="center">7.63</td>
@@ -409,8 +434,23 @@
 
 <br>
 
+### Evaluation Protocol
+- Base Model Benchmarks
+    - MMLU, KMMLU, HAE-RAE: 5-shot, log-likelihood
+    - HumanEval: 0-shot, pass@1
+    - MBPP: 3-shot, pass@1
+    - GSM8K: 5-shot, exact-match (strict-match)
+
+- Instruct Model Benchmarks
+    - MT-Bench, KoMT-Bench: 0-shot, gpt-4o-2024-08-06 as judge model 
+    - IFEval: 0-shot, mean of strict-prompt-level and strict-instruction-level
+    - HumanEval+, MBPP+: 0-shot, pass@1
+    - GSM8K, MATH: 0-shot, rule-based verification
+
+<br>
+
 ### Long Context
-The current approach we use for extending context length to 128k has limitations when applied to models with fewer parameters(~3B models only support 32k). We are therefore refining this approach and intend to implement it across all models going forward soon.
+The current approach we use for extending context length to 128k has limitations when applied to models with fewer parameters(~3B models and Kanana-1.5-15.7B-A3B only support 32k). We are therefore refining this approach and intend to implement it across all models going forward soon.
 
 <details>
 <summary>Kanana-Flag-1.5-32.5B</summary>
@@ -502,8 +542,8 @@ Currently, the `config.json` uploaded to HuggingFace is configured for token len
 <br>
 
 ## Contributors
-- Language Model Training: Yunju Bak, Doohae Jung, Boseop Kim, Nayeon Kim, Hojin Lee, Jaesun Park, Minho Ryu
-- Language Model Alignment: Jiyeon Ham, Seungjae Jung, Hyunho Kim, Hyunwoong Ko, Changmin Lee, Daniel Wontae Nam
+- Language Model Training
+  - Yunju Bak, Doohae Jung, Boseop Kim, Nayeon Kim, Hojin Lee, Jaesun Park, Minho Ryu, Jiyeon Ham, Seungjae Jung, Hyunho Kim, Hyunwoong Ko, Changmin Lee, Taegyeong Eo
 - AI Engineering: Youmin Kim, Hyeongju Kim
 
 <br>
@@ -534,7 +574,7 @@ Below are partial report on the performance of the `Kanana` model series. Please
         <th>Models</th>
         <th>MMLU</th>
         <th>KMMLU</th>
-        <th>HAERAE</th>
+        <th>HAE-RAE</th>
         <th>HumanEval</th>
         <th>MBPP</th>
         <th>GSM8K</th>
